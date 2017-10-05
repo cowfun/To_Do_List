@@ -7,4 +7,10 @@
 
     </form>
 
+    <% for (task of tasks) { %>
+      <div>
+        <p> <%=task.content%></p>
+      </div>
+      <% } %>
+
 <%- include('./partials/footer') %>

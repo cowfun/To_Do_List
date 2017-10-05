@@ -1,18 +1,25 @@
 const Express = require('express');
 const router = Express.Router();
+const kx = require('../db/connection')
 
 router.get('/', (request, response) => {
-  response.render('index')
-})
-
-router.get('/about', (request, response) => {
-  response.render('about')
+  console.log(request.body)
+  kx
+    .select()
+    .from('tasks')
+    .then(tasks => {
+      response.render('index', {content: null, tasks})
+    })
 })
 
 router.post('/', (request, response) => {
-  console.log(request.body)
   const {body} = request;
-  response.render('index', body)
+  const {content} = request.body;
+
+  kx
+    .insert({content: content})
+    .into(`tasks`)
+    .then(response.redirect('/'))
 })
 
 module.exports = router;
